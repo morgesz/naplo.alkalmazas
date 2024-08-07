@@ -1,0 +1,39 @@
+<!-- templates/base.html -->
+
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Napló Alkalmazás</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Napló Alkalmazás</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Főoldal</a></li>
+                    <li><a href="{{ url_for('new_entry') }}">Új Bejegyzés</a></li>
+                    <li><a href="{{ url_for('export_entries') }}">Adatok Exportálása</a></li>
+                    <li><a href="{{ url_for('import_entries') }}">Adatok Importálása</a></li>
+                </ul>
+            </nav>
+        </header>
+        <main>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            {% block content %}{% endblock %}
+        </main>
+        <footer>
+            <p>&copy; 2024 Napló Alkalmazás</p>
+        </footer>
+    </div>
+</body>
+</html>

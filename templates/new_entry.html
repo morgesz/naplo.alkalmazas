@@ -1,0 +1,32 @@
+<!-- templates/new_entry.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Új Bejegyzés</h2>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.cim.label }}<br>
+        {{ form.cim(size=40) }}<br>
+        {% for error in form.cim.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.tartalom.label }}<br>
+        {{ form.tartalom(cols=40, rows=5) }}<br>
+        {% for error in form.tartalom.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.datum.label }}<br>
+        {{ form.datum(size=20) }}<br>
+        {% for error in form.datum.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

@@ -1,0 +1,43 @@
+<!-- templates/index.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Bejegyzések</h2>
+<form method="GET" action="{{ url_for('index') }}">
+    <label for="sort_by">Rendezés:</label>
+    <select name="sort_by" id="sort_by">
+        <option value="datum" {% if sort_by == 'datum' %}selected{% endif %}>Dátum</option>
+        <option value="cim" {% if sort_by == 'cim' %}selected{% endif %}>Cím</option>
+    </select>
+    <label for="order">Rendezés iránya:</label>
+    <select name="order" id="order">
+        <option value="asc" {% if order == 'asc' %}selected{% endif %}>Növekvő</option>
+        <option value="desc" {% if order == 'desc' %}selected{% endif %}>Csökkenő</option>
+    </select>
+    <label for="filter">Szűrés:</label>
+    <input type="text" name="filter" id="filter" value="{{ filter }}">
+    <button type="submit">Alkalmaz</button>
+</form>
+
+<!-- Statisztikai adatok megjelenítése -->
+<p>Összes bejegyzés: {{ bejegyzesek_szama }}</p>
+{% if legutobbi_bejegyzes %}
+    <p>Legutóbbi bejegyzés dátuma: {{ legutobbi_bejegyzes.datum }}</p>
+{% endif %}
+<p>Átlagos bejegyzés hossz: {{ atlagos_hossz }} karakter</p>
+
+<ul>
+    {% for bejegyzes in bejegyzesek %}
+    <li>
+        <strong>{{ bejegyzes.cim }}</strong><br>
+        <small>{{ bejegyzes.datum }}</small><br>
+        {{ bejegyzes.tartalom }}<br>
+        <a href="{{ url_for('edit_entry', id=bejegyzes.id) }}">Szerkesztés</a> |
+        <form action="{{ url_for('delete_entry', id=bejegyzes.id) }}" method="POST" style="display:inline;">
+            <button type="submit">Törlés</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

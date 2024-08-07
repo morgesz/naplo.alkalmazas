@@ -1,0 +1,18 @@
+<!-- templates/import_entries.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Adatok Importálása</h2>
+<form method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.file.label }}<br>
+        {{ form.file() }}<br>
+        {% for error in form.file.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}
